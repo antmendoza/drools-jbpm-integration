@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>droolsjbpm</groupId>
-	<artifactId>droolsjbpm</artifactId>
+	<groupId>drools-jbpm-integration</groupId>
+	<artifactId>drools-jbpm-integration</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
@@ -10,14 +10,16 @@
 		<junit.version>4.11</junit.version>
 		<mockito.version>2.0.5-beta</mockito.version>
 		<hamcrest.version>1.3</hamcrest.version>
+		<hamcrest.version>1.3</hamcrest.version>
+		<slf4j.version>1.7.21</slf4j.version>
+	
 	</properties>
 	<dependencies>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.21</version>
-			<scope>runtime</scope>
+			<version>${slf4j.version}</version>
 		</dependency>
 
 
