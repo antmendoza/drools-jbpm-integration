@@ -2,7 +2,7 @@ package odsc.com.antmendoza.droolsjbpm.simpletest
 
 import odsc.com.antmendoza.droolsjbpm.model.*;
 
-rule "Person between 25 and 45 is potential client level 2"
+rule "Person between 25 and 45 is potential client level SILVER"
 	salience 100
 	activation-group "determineLevelByAge" //make this exclusive
     when
@@ -12,18 +12,16 @@ rule "Person between 25 and 45 is potential client level 2"
 end
 
 
-rule "Person older than 25 is  is potential client level 1"
+rule "Person older than 18 is  is potential client level BRONZE"
 	activation-group "determineLevelByAge" //make this exclusive
     when
-        $person: Person(age >= 25 )
+        $person: Person(age >= 18 )
     then
         insert(new PotencialClient($person, PotencialClient.LEVEL.BRONZE));
 end
 
 
-
-
-rule "PotencialClient with annual income bigger than 100K"
+rule "PotencialClient with annual income greater than 100K"
     no-loop true
     when
         $potencialClient: PotencialClient($personId : person.id)

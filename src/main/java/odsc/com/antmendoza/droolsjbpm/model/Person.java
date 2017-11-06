@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Person {
 
-	private final Integer id =new Random().nextInt();
+	private final Integer id = new Random().nextInt();
 	private final String name;
 	private final Integer age;
 	private final Long annualIncome;

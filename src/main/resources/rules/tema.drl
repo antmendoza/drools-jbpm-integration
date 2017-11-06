@@ -1,0 +1,9 @@
+package odsc.com.antmendoza.droolsjbpm.simpletest
+
+
+declare PurchaseEvent
+    @role(event)
+    clienteId: String
+    purchaseAmount: java.math.BigDecimal
+end
+
