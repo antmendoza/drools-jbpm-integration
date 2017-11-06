@@ -2,7 +2,7 @@ package odsc.com.antmendoza.droolsjbpm.simpletest
 
 import odsc.com.antmendoza.droolsjbpm.model.*;
 
-rule "Person between 25 and 45 is potential client level SILVER"
+rule "Person between 25 and 45 is client level SILVER"
 	salience 100
 	activation-group "determineLevelByAge" //make this exclusive
     when
@@ -12,7 +12,7 @@ rule "Person between 25 and 45 is potential client level SILVER"
 end
 
 
-rule "Person older than 18 is  is potential client level BRONZE"
+rule "Person older than 18 is client level BRONZE"
 	activation-group "determineLevelByAge" //make this exclusive
     when
         $person: Person(age >= 18 )

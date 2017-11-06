@@ -132,7 +132,33 @@ public class EventTest {
 	}
 	
 	
-	
+	@Test
+	public void testSendEmailTwoPurchasesInLessThan24hClientBRONZE() {
+		final KieSession kSession = kContainer.newKieSession();
+
+		final EmailService emailService = Mockito.spy(EmailService.class);
+		kSession.setGlobal("emailService", emailService);
+		
+		final Person richPerson = new Person("", 50, 200000L);
+		final Client clientGlod = new Client(richPerson, LEVEL.BRONZE);
+		final Purchase purchase200 = new Purchase(clientGlod.getId(), new BigDecimal(200));
+
+		kSession.insert(richPerson);
+		kSession.insert(purchase200);
+		kSession.fireAllRules(new PrintBeforeExecution());
+
+		// Mock the time,moving the time 10h forward
+		final SessionPseudoClock pseudoClock = kSession.getSessionClock();
+		pseudoClock.advanceTime(10, TimeUnit.HOURS);
+
+		final Purchase purchase400 = new Purchase(clientGlod.getId(), new BigDecimal(400));
+		kSession.insert(purchase400);
+		kSession.fireAllRules(new PrintBeforeExecution());
+
+		Mockito.verify(emailService, VerificationModeFactory.atLeastOnce()).sendEmail(clientGlod.getId());
+
+	}
+
 	
 	
 	

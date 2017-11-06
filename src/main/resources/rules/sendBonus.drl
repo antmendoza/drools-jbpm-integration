@@ -29,9 +29,7 @@ rule "Send bonus to a client GOLD if make two purchases in 24h"
         				clientId == $clientId,  
         				this before[0h, 24h] $event1 
         			) 
-        $client: Client(id == $clientId)      
-        			
-        
+        $client: Client(id == $clientId, level == Client.LEVEL.GOLD)      
     then
 		emailService.sendEmail($clientId);
 end
