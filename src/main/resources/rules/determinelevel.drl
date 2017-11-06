@@ -8,7 +8,7 @@ rule "Person between 25 and 45 is potential client level SILVER"
     when
         $person: Person(age >= 25 && age <= 45 )
     then
-        insert(new PotencialClient($person, PotencialClient.LEVEL.SILVER));
+        insert(new Client($person, Client.LEVEL.SILVER));
 end
 
 
@@ -17,22 +17,22 @@ rule "Person older than 18 is  is potential client level BRONZE"
     when
         $person: Person(age >= 18 )
     then
-        insert(new PotencialClient($person, PotencialClient.LEVEL.BRONZE));
+        insert(new Client($person, Client.LEVEL.BRONZE));
 end
 
 
-rule "PotencialClient with annual income greater than 100K"
+rule "Client with annual income greater than 100K become GOLD"
     no-loop true
     when
-        $potencialClient: PotencialClient($personId : person.id)
+        $client: Client($personId : person.id)
         $person: Person(id == $personId , annualIncome > 100000L)
 
-		//Select Person.* from PotencialClient, Person where potencialClient.personId = person.id
+		//Select Person.* from Client, Person where Client.personId = person.id
    		// and person.annualIncome > 100K
 
     then
-	    delete($potencialClient);
-        insert(new PotencialClient($person, PotencialClient.LEVEL.GOLD));
+	    delete($client);
+        insert(new Client($person, Client.LEVEL.GOLD));
 end
 
 

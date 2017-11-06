@@ -1,6 +1,6 @@
 package odsc.com.antmendoza.droolsjbpm.model;
 
-public class PotencialClient {
+public class Client {
 
 	public enum LEVEL {
 		BRONZE, SILVER, GOLD;
@@ -10,7 +10,7 @@ public class PotencialClient {
 	private final Person person;
 	private final LEVEL level;
 
-	public PotencialClient(final Person person, final LEVEL level) {
+	public Client(final Person person, final LEVEL level) {
 		this.person = person;
 		this.level = level;
 		id = "CID" + person.getId();
@@ -31,7 +31,6 @@ public class PotencialClient {
 
 	@Override
 	public String toString() {
-
-		return "PotencialClient { " + " person=[" + person + "];" + " level=[" + level + "]" + "}";
+		return "Client { person=[" + person + "]; level=[" + level + "]; id=[" + id + "]}";
 	}
 }

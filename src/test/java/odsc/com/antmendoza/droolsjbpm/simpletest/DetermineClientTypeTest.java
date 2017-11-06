@@ -6,7 +6,6 @@ import static org.junit.Assert.assertThat;
 import java.util.Collection;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -14,21 +13,20 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.ObjectFilter;
-import org.kie.api.runtime.rule.AgendaFilter;
-import org.kie.api.runtime.rule.Match;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import odsc.com.antmendoza.droolsjbpm.model.Client;
+import odsc.com.antmendoza.droolsjbpm.model.Client.LEVEL;
 import odsc.com.antmendoza.droolsjbpm.model.Person;
-import odsc.com.antmendoza.droolsjbpm.model.PotencialClient;
-import odsc.com.antmendoza.droolsjbpm.model.PotencialClient.LEVEL;
+import odsc.com.antmendoza.droolsjbpm.util.PrintBeforeExecution;
 
-public class SimpleTest {
+public class DetermineClientTypeTest {
 
-	private static final Logger logger = LoggerFactory.getLogger(SimpleTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(DetermineClientTypeTest.class);
 	private KieContainer kContainer;
 
-	public SimpleTest() {
+	public DetermineClientTypeTest() {
 		final KieServices ks = KieServices.Factory.get();
 		kContainer = ks.getKieClasspathContainer();
 	}
@@ -55,12 +53,12 @@ public class SimpleTest {
 		kSession.insert(person);
 		kSession.fireAllRules(new PrintBeforeExecution());
 
-		final Collection<?> potencialClients = kSession.getObjects(new PotencialClientObjectFilter());
-		assertThat(potencialClients.size(), equalTo(1));
+		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
+		assertThat(Clients.size(), equalTo(1));
 
-		final PotencialClient potencialClient = (PotencialClient) potencialClients.iterator().next();
-		assertThat(potencialClient.getPerson(), equalTo(person));
-		assertThat(potencialClient.getLevel(), equalTo(LEVEL.BRONZE));
+		final Client Client = (Client) Clients.iterator().next();
+		assertThat(Client.getPerson(), equalTo(person));
+		assertThat(Client.getLevel(), equalTo(LEVEL.BRONZE));
 	}
 
 	@Test
@@ -71,12 +69,12 @@ public class SimpleTest {
 		kSession.insert(person);
 		kSession.fireAllRules(new PrintBeforeExecution());
 
-		final Collection<?> potencialClients = kSession.getObjects(new PotencialClientObjectFilter());
-		assertThat(potencialClients.size(), equalTo(1));
+		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
+		assertThat(Clients.size(), equalTo(1));
 
-		final PotencialClient potencialClient = (PotencialClient) potencialClients.iterator().next();
-		assertThat(potencialClient.getPerson(), equalTo(person));
-		assertThat(potencialClient.getLevel(), equalTo(LEVEL.SILVER));
+		final Client Client = (Client) Clients.iterator().next();
+		assertThat(Client.getPerson(), equalTo(person));
+		assertThat(Client.getLevel(), equalTo(LEVEL.SILVER));
 	}
 
 	@Test
@@ -89,26 +87,19 @@ public class SimpleTest {
 		kSession.insert(person);
 		kSession.fireAllRules(new PrintBeforeExecution());
 
-		final Collection<?> potencialClients = kSession.getObjects(new PotencialClientObjectFilter());
-		assertThat(potencialClients.size(), equalTo(1));
+		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
+		assertThat(Clients.size(), equalTo(1));
 
-		final PotencialClient potencialClient = (PotencialClient) potencialClients.iterator().next();
-		assertThat(potencialClient.getPerson(), equalTo(person));
-		assertThat(potencialClient.getLevel(), equalTo(LEVEL.GOLD));
+		final Client Client = (Client) Clients.iterator().next();
+		assertThat(Client.getPerson(), equalTo(person));
+		assertThat(Client.getLevel(), equalTo(LEVEL.GOLD));
 	}
 
-	private static class PrintBeforeExecution implements AgendaFilter {
-		public boolean accept(Match match) {
-			logger.info(match.getRule().getName());
-			match.getObjects().forEach(object -> logger.info("   " + object.toString()));
-			logger.info("");
-			return true;
-		}
-	}
 
-	private static class PotencialClientObjectFilter implements ObjectFilter {
+
+	private static class ClientObjectFilter implements ObjectFilter {
 		public boolean accept(Object object) {
-			return object instanceof PotencialClient;
+			return object instanceof Client;
 		}
 	}
 

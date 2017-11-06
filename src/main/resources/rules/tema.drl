@@ -1,9 +1,39 @@
 package odsc.com.antmendoza.droolsjbpm.simpletest
 
 
+global odsc.com.antmendoza.droolsjbpm.service.EmailService emailService;
+
+
 declare PurchaseEvent
     @role(event)
-    clienteId: String
+    clientId: String
     purchaseAmount: java.math.BigDecimal
 end
+
+
+
+rule "Generate a PurchaseEvent for each Purchase"
+    when
+        $purchase: Purchase()
+    then
+        insert(new PurchaseEvent($purchase.getClientId(), $purchase.getAmount()));
+end
+
+
+
+rule "Send bonus to a client GOLD if make two purchases in 24h"
+       when
+        $event1: PurchaseEvent($clientId: clientId)      
+        $event2: PurchaseEvent(
+        				this != $event1, 
+        				clientId == $clientId,  
+        				this before[0h, 24h] $event1 
+        			) 
+        $client: Client(id == $clientId)      
+        			
+        
+    then
+		emailService.sendEmail($clientId);
+end
+
 
