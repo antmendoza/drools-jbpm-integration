@@ -45,24 +45,33 @@ public class DetermineClientTypeTest {
 	}
 
 	@Test
-	public void testPersonWithAge50IsLevel1() {
+	public void testPersonWithAge50IsClientBRONZE() {
 
+		//Prepare test
 		final KieSession kSession = kContainer.newKieSession();
 		final Person person = new Person("Person1", AGE._50.getValue(), ANNUAL_INCOME._38k.getValue());
 		// insert an object in the engine
 		kSession.insert(person);
 		kSession.fireAllRules(new PrintRuleExecution());
 
+		//assert that there is one only client and the level is BRONZE
 		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
 		assertThat(Clients.size(), equalTo(1));
 
-		final Client Client = (Client) Clients.iterator().next();
-		assertThat(Client.getPerson(), equalTo(person));
-		assertThat(Client.getLevel(), equalTo(LEVEL.BRONZE));
+		final Client client = (Client) Clients.iterator().next();
+		assertThat(client.getPerson(), equalTo(person));
+		assertThat(client.getLevel(), equalTo(LEVEL.BRONZE));
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	@Test
-	public void testPersonWithAge35IsLevel2() {
+	public void testPersonWithAge35IsClientSILVER() {
 
 		final KieSession kSession = kContainer.newKieSession();
 		final Person person = new Person("Person1", AGE._25.getValue(), ANNUAL_INCOME._38k.getValue());
@@ -72,13 +81,32 @@ public class DetermineClientTypeTest {
 		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
 		assertThat(Clients.size(), equalTo(1));
 
-		final Client Client = (Client) Clients.iterator().next();
-		assertThat(Client.getPerson(), equalTo(person));
-		assertThat(Client.getLevel(), equalTo(LEVEL.SILVER));
+		final Client client = (Client) Clients.iterator().next();
+		assertThat(client.getPerson(), equalTo(person));
+		assertThat(client.getLevel(), equalTo(LEVEL.SILVER));
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Test
-	public void testPersonWithAnnulIncomeGreater100k() {
+	public void testPersonWithAnnulIncomeGreater100kIsClientGOLD() {
 
 		final KieSession kSession = kContainer.newKieSession();
 		final Person person = new Person("Person1", AGE._25.getValue(), ANNUAL_INCOME._110K.getValue());
@@ -90,9 +118,9 @@ public class DetermineClientTypeTest {
 		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
 		assertThat(Clients.size(), equalTo(1));
 
-		final Client Client = (Client) Clients.iterator().next();
-		assertThat(Client.getPerson(), equalTo(person));
-		assertThat(Client.getLevel(), equalTo(LEVEL.GOLD));
+		final Client client = (Client) Clients.iterator().next();
+		assertThat(client.getPerson(), equalTo(person));
+		assertThat(client.getLevel(), equalTo(LEVEL.GOLD));
 	}
 
 
