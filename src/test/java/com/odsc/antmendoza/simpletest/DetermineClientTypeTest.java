@@ -45,32 +45,29 @@ public class DetermineClientTypeTest {
 	}
 
 	@Test
-	//between 18 and 25
+	// between 18 and 25
 	public void testPersonBetween18And25IsClientBRONZE() {
 
-		//Prepare test
+		// Entry point
 		final KieSession kSession = kContainer.newKieSession();
+
+		// Prepare test
 		final Person person = new Person("Person1", AGE._20.getValue(), ANNUAL_INCOME._38k.getValue());
-		// insert an object in the engine
 		kSession.insert(person);
+
+		// Execute
 		kSession.fireAllRules(new PrintRuleExecution());
 
-		//assert that there is one only client and the level is BRONZE
+		// assert that there is one only client
 		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
 		assertThat(Clients.size(), equalTo(1));
 
+		// and the level is BRONZE
 		final Client client = (Client) Clients.iterator().next();
 		assertThat(client.getPerson(), equalTo(person));
 		assertThat(client.getLevel(), equalTo(LEVEL.BRONZE));
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
 
 	@Test
 	public void testPersonWithAge35IsClientSILVER() {
@@ -88,25 +85,6 @@ public class DetermineClientTypeTest {
 		assertThat(client.getLevel(), equalTo(LEVEL.SILVER));
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@Test
 	public void testPersonWithAnnulIncomeGreater100kIsClientGOLD() {
 
@@ -124,8 +102,6 @@ public class DetermineClientTypeTest {
 		assertThat(client.getPerson(), equalTo(person));
 		assertThat(client.getLevel(), equalTo(LEVEL.GOLD));
 	}
-
-
 
 	private static class ClientObjectFilter implements ObjectFilter {
 		public boolean accept(Object object) {

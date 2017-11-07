@@ -23,12 +23,12 @@ import com.odsc.antmendoza.model.Client.LEVEL;
 import com.odsc.antmendoza.service.EmailService;
 import com.odsc.antmendoza.util.PrintRuleExecution;
 
-public class EventTest {
+public class SendBonusTest {
 
-	private static final Logger logger = LoggerFactory.getLogger(EventTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(SendBonusTest.class);
 	private KieContainer kContainer;
 
-	public EventTest() {
+	public SendBonusTest() {
 		final KieServices ks = KieServices.Factory.get();
 		kContainer = ks.getKieClasspathContainer();
 	}

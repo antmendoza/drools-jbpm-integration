@@ -8,7 +8,7 @@ public class Client {
 
 	private final String id;
 	private final Person person;
-	private  LEVEL level;
+	private LEVEL level;
 
 	public Client(final Person person, final LEVEL level) {
 		this.person = person;
@@ -23,13 +23,11 @@ public class Client {
 	public LEVEL getLevel() {
 		return level;
 	}
-	
-	
+
 	public String getId() {
 		return id;
 	}
-	
-	
+
 	public void setLevel(LEVEL level) {
 		this.level = level;
 	}
