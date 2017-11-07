@@ -1,18 +1,16 @@
-package odsc.com.antmendoza.droolsjbpm.simpletest
+package com.odsc.antmendoza.simpletest
 
-import odsc.com.antmendoza.droolsjbpm.model.*;
-
-
+import com.odsc.antmendoza.model.*;
 
 
 
-rule "Person between 25 and 45 is client level SILVER"
-	//salience 100 // default 0, higher salience  means is evaluated first. 
-	activation-group "determineLevelByAge" //the first rule in an activation-group to fire will cancel the other rules' activations,
+
+
+rule "Person between 18 and 25 is client level BRONZE" //description
     when
-        $person: Person(age >= 25 && age <= 45 )
+        $person: Person(age >= 18 && age < 25 ) //condition
     then
-        insert(new Client($person, Client.LEVEL.SILVER));
+        insert(new Client($person, Client.LEVEL.BRONZE)); //action
 end
 
 
@@ -22,17 +20,11 @@ end
 
 
 
-
-
-
-
-
-rule "Person older than 18 is client level BRONZE"
-	activation-group "determineLevelByAge" //the first rule in an activation-group to fire will cancel the other rules' activations,
+rule "Person between 25 and 45 is client level SILVER"
     when
-        $person: Person(age >= 18 )
+        $person: Person(age >= 25 && age < 45 )
     then
-        insert(new Client($person, Client.LEVEL.BRONZE));
+        insert(new Client($person, Client.LEVEL.SILVER));
 end
 
 
@@ -45,14 +37,13 @@ end
 rule "Client with annual income greater than 100K become GOLD"
     no-loop true
     when
-
 		//Select Person.* from Client, Person where Client.personId = person.id
    		// and person.annualIncome > 100K
 
         $client: Client($personId : person.id)
         $person: Person(id == $personId , annualIncome > 100000L)
     then
-    	modify ( $client )  { setLevel( Client.LEVEL.GOLD ) }
+    		modify ( $client )  { setLevel( Client.LEVEL.GOLD ) }
 end
 
 

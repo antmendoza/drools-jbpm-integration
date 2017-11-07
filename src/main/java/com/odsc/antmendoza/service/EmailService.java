@@ -1,4 +1,4 @@
-package odsc.com.antmendoza.droolsjbpm.service;
+package com.odsc.antmendoza.service;
 
 public interface EmailService {
 	void sendEmail(String clientId);

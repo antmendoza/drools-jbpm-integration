@@ -1,7 +1,7 @@
-package odsc.com.antmendoza.droolsjbpm.simpletest
+package com.odsc.antmendoza.simpletest
 
 
-global odsc.com.antmendoza.droolsjbpm.service.EmailService emailService;
+global com.odsc.antmendoza.service.EmailService emailService;
 
 
 declare PurchaseEvent

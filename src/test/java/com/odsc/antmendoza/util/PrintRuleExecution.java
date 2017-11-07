@@ -1,4 +1,4 @@
-package odsc.com.antmendoza.droolsjbpm.util;
+package com.odsc.antmendoza.util;
 
 import org.kie.api.runtime.rule.AgendaFilter;
 import org.kie.api.runtime.rule.Match;

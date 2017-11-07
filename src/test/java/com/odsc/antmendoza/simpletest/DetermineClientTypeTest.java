@@ -1,4 +1,4 @@
-package odsc.com.antmendoza.droolsjbpm.simpletest;
+package com.odsc.antmendoza.simpletest;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -16,10 +16,10 @@ import org.kie.api.runtime.ObjectFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import odsc.com.antmendoza.droolsjbpm.model.Client;
-import odsc.com.antmendoza.droolsjbpm.model.Client.LEVEL;
-import odsc.com.antmendoza.droolsjbpm.model.Person;
-import odsc.com.antmendoza.droolsjbpm.util.PrintRuleExecution;
+import com.odsc.antmendoza.model.Client;
+import com.odsc.antmendoza.model.Person;
+import com.odsc.antmendoza.model.Client.LEVEL;
+import com.odsc.antmendoza.util.PrintRuleExecution;
 
 public class DetermineClientTypeTest {
 
@@ -45,11 +45,12 @@ public class DetermineClientTypeTest {
 	}
 
 	@Test
-	public void testPersonWithAge50IsClientBRONZE() {
+	//between 18 and 25
+	public void testPersonBetween18And25IsClientBRONZE() {
 
 		//Prepare test
 		final KieSession kSession = kContainer.newKieSession();
-		final Person person = new Person("Person1", AGE._50.getValue(), ANNUAL_INCOME._38k.getValue());
+		final Person person = new Person("Person1", AGE._20.getValue(), ANNUAL_INCOME._38k.getValue());
 		// insert an object in the engine
 		kSession.insert(person);
 		kSession.fireAllRules(new PrintRuleExecution());
@@ -61,6 +62,7 @@ public class DetermineClientTypeTest {
 		final Client client = (Client) Clients.iterator().next();
 		assertThat(client.getPerson(), equalTo(person));
 		assertThat(client.getLevel(), equalTo(LEVEL.BRONZE));
+		
 	}
 	
 	
@@ -132,7 +134,7 @@ public class DetermineClientTypeTest {
 	}
 
 	private static enum AGE {
-		_50(50), _25(25);
+		_20(20), _25(25);
 
 		private final int value;
 

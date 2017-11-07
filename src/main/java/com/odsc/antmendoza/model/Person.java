@@ -1,4 +1,4 @@
-package odsc.com.antmendoza.droolsjbpm.model;
+package com.odsc.antmendoza.model;
 
 import java.util.Random;
 

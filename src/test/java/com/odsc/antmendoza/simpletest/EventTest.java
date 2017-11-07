@@ -1,4 +1,4 @@
-package odsc.com.antmendoza.droolsjbpm.simpletest;
+package com.odsc.antmendoza.simpletest;
 
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
@@ -16,13 +16,12 @@ import org.mockito.internal.verification.VerificationModeFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import odsc.com.antmendoza.droolsjbpm.model.Client;
-import odsc.com.antmendoza.droolsjbpm.model.Client.LEVEL;
-import odsc.com.antmendoza.droolsjbpm.model.Person;
-import odsc.com.antmendoza.droolsjbpm.model.Purchase;
-import odsc.com.antmendoza.droolsjbpm.service.EmailService;
-import odsc.com.antmendoza.droolsjbpm.util.PrintRuleExecution;
-import odsc.com.antmendoza.droolsjbpm.util.PrintRuleExecution;
+import com.odsc.antmendoza.model.Client;
+import com.odsc.antmendoza.model.Person;
+import com.odsc.antmendoza.model.Purchase;
+import com.odsc.antmendoza.model.Client.LEVEL;
+import com.odsc.antmendoza.service.EmailService;
+import com.odsc.antmendoza.util.PrintRuleExecution;
 
 public class EventTest {
 
@@ -140,7 +139,7 @@ public class EventTest {
 		final EmailService emailService = Mockito.spy(EmailService.class);
 		kSession.setGlobal("emailService", emailService);
 		
-		final Person richPerson = new Person("", 50, 200000L);
+		final Person richPerson = new Person("", 20, 200000L);
 		final Client clientGlod = new Client(richPerson, LEVEL.BRONZE);
 		final Purchase purchase200 = new Purchase(clientGlod.getId(), new BigDecimal(200));
 
