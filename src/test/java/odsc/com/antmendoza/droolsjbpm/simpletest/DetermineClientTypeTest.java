@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 import odsc.com.antmendoza.droolsjbpm.model.Client;
 import odsc.com.antmendoza.droolsjbpm.model.Client.LEVEL;
 import odsc.com.antmendoza.droolsjbpm.model.Person;
-import odsc.com.antmendoza.droolsjbpm.util.PrintBeforeExecution;
+import odsc.com.antmendoza.droolsjbpm.util.PrintRuleExecution;
 
 public class DetermineClientTypeTest {
 
@@ -51,7 +51,7 @@ public class DetermineClientTypeTest {
 		final Person person = new Person("Person1", AGE._50.getValue(), ANNUAL_INCOME._38k.getValue());
 		// insert an object in the engine
 		kSession.insert(person);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
 		assertThat(Clients.size(), equalTo(1));
@@ -67,7 +67,7 @@ public class DetermineClientTypeTest {
 		final KieSession kSession = kContainer.newKieSession();
 		final Person person = new Person("Person1", AGE._25.getValue(), ANNUAL_INCOME._38k.getValue());
 		kSession.insert(person);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
 		assertThat(Clients.size(), equalTo(1));
@@ -85,7 +85,7 @@ public class DetermineClientTypeTest {
 		// insert an object in the engine
 
 		kSession.insert(person);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
 		assertThat(Clients.size(), equalTo(1));

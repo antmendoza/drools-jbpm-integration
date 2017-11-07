@@ -21,7 +21,8 @@ import odsc.com.antmendoza.droolsjbpm.model.Client.LEVEL;
 import odsc.com.antmendoza.droolsjbpm.model.Person;
 import odsc.com.antmendoza.droolsjbpm.model.Purchase;
 import odsc.com.antmendoza.droolsjbpm.service.EmailService;
-import odsc.com.antmendoza.droolsjbpm.util.PrintBeforeExecution;
+import odsc.com.antmendoza.droolsjbpm.util.PrintRuleExecution;
+import odsc.com.antmendoza.droolsjbpm.util.PrintRuleExecution;
 
 public class EventTest {
 
@@ -57,7 +58,7 @@ public class EventTest {
 		
 		kSession.insert(clientGlod);
 		kSession.insert(purchase200);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		// Mock the time,moving the time 10h forward
 		final SessionPseudoClock pseudoClock = kSession.getSessionClock();
@@ -65,7 +66,7 @@ public class EventTest {
 
 		final Purchase purchase400 = new Purchase(clientGlod.getId(), new BigDecimal(400));
 		kSession.insert(purchase400);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		Mockito.verify(emailService, VerificationModeFactory.atLeastOnce()).sendEmail(clientGlod.getId());
 
@@ -86,7 +87,7 @@ public class EventTest {
 		
 		kSession.insert(clientGlod);
 		kSession.insert(purchase200);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		// Mock the time,moving the time 10h forward
 		final SessionPseudoClock pseudoClock = kSession.getSessionClock();
@@ -96,7 +97,7 @@ public class EventTest {
 		final Client clientGlodB = new Client(new Person("", 50, 200L), LEVEL.GOLD);
 		final Purchase purchase400 = new Purchase(clientGlodB.getId(), new BigDecimal(400));
 		kSession.insert(purchase400);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		Mockito.verify(emailService, VerificationModeFactory.times(0)).sendEmail(clientGlod.getId());
 
@@ -118,7 +119,7 @@ public class EventTest {
 		
 		kSession.insert(clientGlod);
 		kSession.insert(purchase200);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		// Mock the time,moving the time 25h forward
 		final SessionPseudoClock pseudoClock = kSession.getSessionClock();
@@ -126,7 +127,7 @@ public class EventTest {
 
 		final Purchase purchase400 = new Purchase(clientGlod.getId(), new BigDecimal(400));
 		kSession.insert(purchase400);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		Mockito.verify(emailService, VerificationModeFactory.times(0)).sendEmail(clientGlod.getId());
 	}
@@ -145,7 +146,7 @@ public class EventTest {
 
 		kSession.insert(richPerson);
 		kSession.insert(purchase200);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		// Mock the time,moving the time 10h forward
 		final SessionPseudoClock pseudoClock = kSession.getSessionClock();
@@ -153,7 +154,7 @@ public class EventTest {
 
 		final Purchase purchase400 = new Purchase(clientGlod.getId(), new BigDecimal(400));
 		kSession.insert(purchase400);
-		kSession.fireAllRules(new PrintBeforeExecution());
+		kSession.fireAllRules(new PrintRuleExecution());
 
 		Mockito.verify(emailService, VerificationModeFactory.atLeastOnce()).sendEmail(clientGlod.getId());
 
