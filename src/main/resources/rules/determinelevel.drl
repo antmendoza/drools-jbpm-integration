@@ -24,13 +24,15 @@ end
 rule "Client with annual income greater than 100K become GOLD"
     no-loop true
     when
-        $client: Client($personId : person.id)
-        $person: Person(id == $personId , annualIncome > 100000L)
 
 		//Select Person.* from Client, Person where Client.personId = person.id
    		// and person.annualIncome > 100K
 
+        $client: Client($personId : person.id)
+        $person: Person(id == $personId , annualIncome > 100000L)
     then
+		// If our object where mutable    
+    		//  modify ( $client )  { setLevel( Client.LEVEL.GOLD ) }
 	    delete($client);
         insert(new Client($person, Client.LEVEL.GOLD));
 end
