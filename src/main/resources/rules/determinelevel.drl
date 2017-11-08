@@ -25,9 +25,8 @@ end
 
 
 rule "Client with annual income greater than 1M become GOLD"
-    no-loop true
     when
-        $client: Client($personId : person.id)
+        $client: Client($personId : person.id, level != Client.LEVEL.GOLD )
         $person: Person(id == $personId , annualIncome > 1000000L)
     then
     		modify ( $client )  { setLevel( Client.LEVEL.GOLD ) }

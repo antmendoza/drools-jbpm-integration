@@ -78,7 +78,6 @@ end
 
 
 rule "Client with annual income greater than 1M become GOLD"
-    no-loop true
     when
         $client: Client($personId : person.id)
         $person: Person(id == $personId , annualIncome > 1000000L)
