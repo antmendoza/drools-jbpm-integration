@@ -1,4 +1,4 @@
-package com.odsc.antmendoza.simpletest
+package com.odsc.antmendoza.rules
 
 
 global com.odsc.antmendoza.service.EmailService emailService;
