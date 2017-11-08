@@ -13,7 +13,7 @@ public class Client {
 	public Client(final Person person, final LEVEL level) {
 		this.person = person;
 		this.level = level;
-		id = "CID" + person.getId();
+		this.id = "CID" + person.getId();
 	}
 
 	public Person getPerson() {

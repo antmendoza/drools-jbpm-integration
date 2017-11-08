@@ -139,7 +139,7 @@ public class SendBonusTest {
 		final EmailService emailService = Mockito.spy(EmailService.class);
 		kSession.setGlobal("emailService", emailService);
 		
-		final Person richPerson = new Person("", 20, 200000L);
+		final Person richPerson = new Person("", 20, 2000000L);
 		final Client clientGlod = new Client(richPerson, LEVEL.BRONZE);
 		final Purchase purchase200 = new Purchase(clientGlod.getId(), new BigDecimal(200));
 

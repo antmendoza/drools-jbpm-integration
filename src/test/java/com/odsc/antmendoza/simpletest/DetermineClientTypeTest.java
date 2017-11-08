@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import javax.lang.model.element.Element;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,7 +17,6 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.ObjectFilter;
 import org.kie.api.runtime.rule.QueryResults;
-import org.kie.api.runtime.rule.QueryResultsRow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,7 +71,6 @@ public class DetermineClientTypeTest {
 		final Client client = clients.iterator().next();
 		assertThat(client.getPerson(), equalTo(person));
 		assertThat(client.getLevel(), equalTo(LEVEL.BRONZE));
-
 	}
 
 	@Test
@@ -97,9 +93,8 @@ public class DetermineClientTypeTest {
 	public void testPersonWithAnnulIncomeGreater100kIsClientGOLD() {
 
 		final KieSession kSession = kContainer.newKieSession();
-		final Person person = new Person("Person1", AGE._25.getValue(), ANNUAL_INCOME._110K.getValue());
-		// insert an object in the engine
-
+		final Person person = new Person("Person1", AGE._25.getValue(), ANNUAL_INCOME._2M.getValue());
+	
 		kSession.insert(person);
 		kSession.fireAllRules(new PrintRuleExecution());
 
@@ -113,27 +108,23 @@ public class DetermineClientTypeTest {
 
 	private static enum AGE {
 		_20(20), _25(25);
-
+		
 		private final int value;
-
 		private AGE(int value) {
 			this.value = value;
 		}
-
 		public int getValue() {
 			return value;
 		}
 	}
 
 	private static enum ANNUAL_INCOME {
-		_110K(110000L), _38k(38000L);
+		_2M(2000000L), _38k(38000L);
 
 		private final long value;
-
 		private ANNUAL_INCOME(long value) {
 			this.value = value;
 		}
-
 		public long getValue() {
 			return value;
 		}
@@ -141,7 +132,6 @@ public class DetermineClientTypeTest {
 
 	public List<Client> selectClients(KieSession kSession) {
 		final QueryResults queryResults = kSession.getQueryResults("all clients");
-
 		return StreamSupport.stream(queryResults.spliterator(), false).collect(Collectors.toList()).stream()
 				.map(row -> (Client) row.get("client")).collect(Collectors.toList());
 
