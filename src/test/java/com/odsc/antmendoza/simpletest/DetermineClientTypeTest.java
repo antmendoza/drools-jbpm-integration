@@ -151,7 +151,7 @@ public class DetermineClientTypeTest {
 	}
 
 	public List<Client> selectClients(KieSession kSession) {
-		final QueryResults queryResults = kSession.getQueryResults("all clients");
+		final QueryResults queryResults = kSession.getQueryResults("Get all clients");
 		return StreamSupport.stream(queryResults.spliterator(), false).collect(Collectors.toList()).stream()
 				.map(row -> (Client) row.get("client")).collect(Collectors.toList());
 

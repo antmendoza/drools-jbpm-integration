@@ -3,6 +3,6 @@ package com.odsc.antmendoza.rules
 import com.odsc.antmendoza.model.*;
 
 //Select * from client
-query "all clients" 
+query "Get all clients" 
     client : Client()
 end
