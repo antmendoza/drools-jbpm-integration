@@ -1,0 +1,8 @@
+package com.odsc.antmendoza.simpletest
+
+import com.odsc.antmendoza.model.*;
+
+//Select * from client
+query "all clients" 
+    client : Client()
+end

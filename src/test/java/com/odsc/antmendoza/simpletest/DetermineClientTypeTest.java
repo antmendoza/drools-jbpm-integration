@@ -4,6 +4,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import javax.lang.model.element.Element;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -13,12 +18,14 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.ObjectFilter;
+import org.kie.api.runtime.rule.QueryResults;
+import org.kie.api.runtime.rule.QueryResultsRow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.odsc.antmendoza.model.Client;
-import com.odsc.antmendoza.model.Person;
 import com.odsc.antmendoza.model.Client.LEVEL;
+import com.odsc.antmendoza.model.Person;
 import com.odsc.antmendoza.util.PrintRuleExecution;
 
 public class DetermineClientTypeTest {
@@ -48,7 +55,8 @@ public class DetermineClientTypeTest {
 	// between 18 and 25
 	public void testPersonBetween18And25IsClientBRONZE() {
 
-		// Entry point
+		// Entry point / session - to interact with the engine
+		// initialice the session to interact with the engine
 		final KieSession kSession = kContainer.newKieSession();
 
 		// Prepare test
@@ -59,11 +67,11 @@ public class DetermineClientTypeTest {
 		kSession.fireAllRules(new PrintRuleExecution());
 
 		// assert that there is one only client
-		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
-		assertThat(Clients.size(), equalTo(1));
+		final Collection<Client> clients = selectClients(kSession);
+		assertThat(clients.size(), equalTo(1));
 
 		// and the level is BRONZE
-		final Client client = (Client) Clients.iterator().next();
+		final Client client = clients.iterator().next();
 		assertThat(client.getPerson(), equalTo(person));
 		assertThat(client.getLevel(), equalTo(LEVEL.BRONZE));
 
@@ -77,10 +85,10 @@ public class DetermineClientTypeTest {
 		kSession.insert(person);
 		kSession.fireAllRules(new PrintRuleExecution());
 
-		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
-		assertThat(Clients.size(), equalTo(1));
+		final Collection<Client> clients = selectClients(kSession);
+		assertThat(clients.size(), equalTo(1));
 
-		final Client client = (Client) Clients.iterator().next();
+		final Client client = clients.iterator().next();
 		assertThat(client.getPerson(), equalTo(person));
 		assertThat(client.getLevel(), equalTo(LEVEL.SILVER));
 	}
@@ -95,18 +103,12 @@ public class DetermineClientTypeTest {
 		kSession.insert(person);
 		kSession.fireAllRules(new PrintRuleExecution());
 
-		final Collection<?> Clients = kSession.getObjects(new ClientObjectFilter());
-		assertThat(Clients.size(), equalTo(1));
+		final Collection<Client> clients = selectClients(kSession);
+		assertThat(clients.size(), equalTo(1));
 
-		final Client client = (Client) Clients.iterator().next();
+		final Client client = clients.iterator().next();
 		assertThat(client.getPerson(), equalTo(person));
 		assertThat(client.getLevel(), equalTo(LEVEL.GOLD));
-	}
-
-	private static class ClientObjectFilter implements ObjectFilter {
-		public boolean accept(Object object) {
-			return object instanceof Client;
-		}
 	}
 
 	private static enum AGE {
@@ -136,4 +138,19 @@ public class DetermineClientTypeTest {
 			return value;
 		}
 	}
+
+	public List<Client> selectClients(KieSession kSession) {
+		final QueryResults queryResults = kSession.getQueryResults("all clients");
+
+		return StreamSupport.stream(queryResults.spliterator(), false).collect(Collectors.toList()).stream()
+				.map(row -> (Client) row.get("client")).collect(Collectors.toList());
+
+	}
+
+	private static class ClientObjectFilter implements ObjectFilter {
+		public boolean accept(Object object) {
+			return object instanceof Client;
+		}
+	}
+
 }

@@ -14,13 +14,18 @@ rule "Person between 18 and 25 is client level BRONZE" //description
 end
 
 
+//if(person.age >= 18 && person.age < 25 ){
+//  client = new Client(person, Client.LEVEL.BRONZE); 
+//}
 
 
 
 
 
-//Select Person.* from Client, Person where Client.personId = person.id
-// and person.annualIncome > 100K
+
+
+
+
 rule "Person between 25 and 45 is client level SILVER"
     when
         $person: Person(age >= 25 && age < 45 )
@@ -34,6 +39,8 @@ end
 
 
 
+//Select Person.* from Client, Person where Client.personId = person.id
+// and person.annualIncome > 100K
 
 rule "Client with annual income greater than 100K become GOLD"
     no-loop true
