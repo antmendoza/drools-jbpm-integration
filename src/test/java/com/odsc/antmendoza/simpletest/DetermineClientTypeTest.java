@@ -20,14 +20,16 @@ import org.kie.api.runtime.rule.QueryResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.odsc.antmendoza.listener.DebugSessionEventListener;
+import com.odsc.antmendoza.listener.PrintRuleExecution;
 import com.odsc.antmendoza.model.Client;
 import com.odsc.antmendoza.model.Client.LEVEL;
 import com.odsc.antmendoza.model.Person;
-import com.odsc.antmendoza.util.PrintRuleExecution;
 
 public class DetermineClientTypeTest {
 
-	private static final Logger logger = LoggerFactory.getLogger(DetermineClientTypeTest.class);
+	private static final Logger logger = LoggerFactory.getLogger("");
+	
 	private KieContainer kContainer;
 
 	public DetermineClientTypeTest() {
@@ -49,17 +51,15 @@ public class DetermineClientTypeTest {
 	}
 
 	@Test
-	// between 18 and 25
 	public void testPersonBetween18And25IsClientBRONZE() {
-
 		// Entry point / session - to interact with the engine
 		// initialice the session to interact with the engine
-		final KieSession kSession = kContainer.newKieSession();
+		final KieSession kSession = createKsession();
 
 		// Prepare test
 		final Person person = new Person("Person1", AGE._20.getValue(), ANNUAL_INCOME._38k.getValue());
 		kSession.insert(person);
-
+		
 		// Execute
 		kSession.fireAllRules(new PrintRuleExecution());
 
@@ -73,10 +73,18 @@ public class DetermineClientTypeTest {
 		assertThat(client.getLevel(), equalTo(LEVEL.BRONZE));
 	}
 
+	private KieSession createKsession() {
+		final KieSession kSession = kContainer.newKieSession();
+		kSession.addEventListener(new DebugSessionEventListener());
+		return kSession;
+	}
+
+	
+	
 	@Test
 	public void testPersonWithAge35IsClientSILVER() {
 
-		final KieSession kSession = kContainer.newKieSession();
+		final KieSession kSession = createKsession();
 		final Person person = new Person("Person1", AGE._25.getValue(), ANNUAL_INCOME._38k.getValue());
 		kSession.insert(person);
 		kSession.fireAllRules(new PrintRuleExecution());
@@ -89,10 +97,14 @@ public class DetermineClientTypeTest {
 		assertThat(client.getLevel(), equalTo(LEVEL.SILVER));
 	}
 
+	
+	
+	
+	
 	@Test
 	public void testPersonWithAnnulIncomeGreater100kIsClientGOLD() {
 
-		final KieSession kSession = kContainer.newKieSession();
+		final KieSession kSession = createKsession();
 		final Person person = new Person("Person1", AGE._25.getValue(), ANNUAL_INCOME._2M.getValue());
 	
 		kSession.insert(person);
@@ -106,6 +118,14 @@ public class DetermineClientTypeTest {
 		assertThat(client.getLevel(), equalTo(LEVEL.GOLD));
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 	private static enum AGE {
 		_20(20), _25(25);
 		

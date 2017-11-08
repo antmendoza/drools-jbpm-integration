@@ -21,8 +21,8 @@ end
 
 
 
-rule "Send bonus to a client GOLD if they make two purchases in 24h"
-       when
+rule "Send bonus to a client GOLD if the client makes two purchases in 24h"
+	when
         $event1: PurchaseEvent($clientId: clientId)      
         $event2: PurchaseEvent(
         				this != $event1, 

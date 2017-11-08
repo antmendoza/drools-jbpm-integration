@@ -1,11 +1,20 @@
 Drools. Business Rule Management System (BRMS)
 
 
-
-
 +++ Business Rule Management System 
 
 Is a framework that allow us to implement, maintain and execute business rules.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -15,6 +24,11 @@ Is a framework that allow us to implement, maintain and execute business rules.
 		a condition is found to be true
 	then 
 		an action is executed
+
+
+
+
+
 
 
 
@@ -38,11 +52,16 @@ Business requirements:
 
 
 
+
+
+
 public final Client determineClient(final Person person){
     Client client;
+    
     if(person.age >= 18 && person.age < 25 ){
         client = new Client(person, Client.LEVEL.BRONZE); 
     }
+    
     if(person.age >= 25 && person.age < 45 ){
         client = new Client(person, Client.LEVEL.SILVER); 
     }
@@ -50,6 +69,8 @@ public final Client determineClient(final Person person){
     if(client != null && person.annualIncome > 1000000L) {
         client = new Client(person, Client.LEVEL.GOLDEN); 
     }
+    
+    
     return client;
 }
 

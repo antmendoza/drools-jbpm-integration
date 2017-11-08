@@ -16,12 +16,13 @@ import org.mockito.internal.verification.VerificationModeFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.odsc.antmendoza.listener.PrintRuleExecution;
 import com.odsc.antmendoza.model.Client;
+import com.odsc.antmendoza.model.Client.LEVEL;
 import com.odsc.antmendoza.model.Person;
 import com.odsc.antmendoza.model.Purchase;
-import com.odsc.antmendoza.model.Client.LEVEL;
 import com.odsc.antmendoza.service.EmailService;
-import com.odsc.antmendoza.util.PrintRuleExecution;
+
 
 public class EventProcessingTest {
 
