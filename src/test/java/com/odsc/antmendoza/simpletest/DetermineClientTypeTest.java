@@ -73,11 +73,6 @@ public class DetermineClientTypeTest {
 		assertThat(client.getLevel(), equalTo(LEVEL.BRONZE));
 	}
 
-	private KieSession createKsession() {
-		final KieSession kSession = kContainer.newKieSession();
-		kSession.addEventListener(new DebugSessionEventListener());
-		return kSession;
-	}
 
 	
 	
@@ -161,6 +156,13 @@ public class DetermineClientTypeTest {
 		public boolean accept(Object object) {
 			return object instanceof Client;
 		}
+	}
+	
+
+	private KieSession createKsession() {
+		final KieSession kSession = kContainer.newKieSession();
+		kSession.addEventListener(new DebugSessionEventListener());
+		return kSession;
 	}
 
 }

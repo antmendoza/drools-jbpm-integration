@@ -37,7 +37,7 @@ Is a framework that allow us to implement, maintain and execute business rules.
 
 
 
-Business requirements:
+Business rules:
 - A person between 18 and 25 is a client level BRONZE
 - A person between 25 and 45 is a client level SILVER
 - Any client is GOLD if their annual income is greater than £1M
