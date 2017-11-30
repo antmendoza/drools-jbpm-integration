@@ -52,7 +52,7 @@ public class EventProcessingTest {
 		final EmailService emailService = Mockito.spy(EmailService.class);
 		kSession.setGlobal("emailService", emailService);
 
-		final Client clientGlod = new Client(new Person("", 50, 200L), LEVEL.GOLD);
+		final Client clientGlod = new Client(new Person("", 50, 200L).getId(), LEVEL.GOLD);
 		final Purchase purchase200 = new Purchase(clientGlod.getId(), new BigDecimal(200));
 
 		
@@ -68,7 +68,7 @@ public class EventProcessingTest {
 		kSession.insert(purchase400);
 		kSession.fireAllRules(new PrintRuleExecution());
 
-		Mockito.verify(emailService, VerificationModeFactory.atLeastOnce()).sendEmail(clientGlod.getId());
+		Mockito.verify(emailService, VerificationModeFactory.times(1)).sendEmail(clientGlod.getId());
 
 	}
 
@@ -81,7 +81,7 @@ public class EventProcessingTest {
 		final EmailService emailService = Mockito.spy(EmailService.class);
 		kSession.setGlobal("emailService", emailService);
 		
-		final Client clientGlod = new Client(new Person("", 50, 200L), LEVEL.GOLD);
+		final Client clientGlod = new Client(new Person("", 50, 200L).getId(), LEVEL.GOLD);
 		final Purchase purchase200 = new Purchase(clientGlod.getId(), new BigDecimal(200));
 
 		
@@ -94,7 +94,7 @@ public class EventProcessingTest {
 		pseudoClock.advanceTime(10, TimeUnit.HOURS);
 
 		
-		final Client clientGlodB = new Client(new Person("", 50, 200L), LEVEL.GOLD);
+		final Client clientGlodB = new Client(new Person("", 50, 200L).getId(), LEVEL.GOLD);
 		final Purchase purchase400 = new Purchase(clientGlodB.getId(), new BigDecimal(400));
 		kSession.insert(purchase400);
 		kSession.fireAllRules(new PrintRuleExecution());
@@ -113,7 +113,7 @@ public class EventProcessingTest {
 		final EmailService emailService = Mockito.spy(EmailService.class);
 		kSession.setGlobal("emailService", emailService);
 		
-		final Client clientGlod = new Client(new Person("", 50, 200L), LEVEL.GOLD);
+		final Client clientGlod = new Client(new Person("", 50, 200L).getId(), LEVEL.GOLD);
 		final Purchase purchase200 = new Purchase(clientGlod.getId(), new BigDecimal(200));
 
 		
@@ -141,7 +141,7 @@ public class EventProcessingTest {
 		kSession.setGlobal("emailService", emailService);
 		
 		final Person richPerson = new Person("", 20, 2000000L);
-		final Client clientGlod = new Client(richPerson, LEVEL.BRONZE);
+		final Client clientGlod = new Client(richPerson.getId(), LEVEL.BRONZE);
 		final Purchase purchase200 = new Purchase(clientGlod.getId(), new BigDecimal(200));
 
 		kSession.insert(richPerson);

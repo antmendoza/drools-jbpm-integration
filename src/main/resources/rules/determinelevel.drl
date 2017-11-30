@@ -1,27 +1,41 @@
 package com.odsc.antmendoza.rules
 
+
 import com.odsc.antmendoza.model.*;
+
+
+
+
 
 rule "Person between 18 and 25 is client level BRONZE" //description
     when
         $person: Person(age >= 18 && age < 25 ) //condition
     then
-        insert(new Client($person, Client.LEVEL.BRONZE)); //action
+        insert(new Client($person.getId(), Client.LEVEL.BRONZE)); //action
 end
+
+
+
 
 rule "Person between 25 and 45 is client level SILVER"
     when
-        $person: Person(age >= 25 && age < 45 )
+        $person: Person(age >= 25 && age < 45, $personId: id)
     then
-        insert(new Client($person, Client.LEVEL.SILVER));
+        insert(new Client($personId, Client.LEVEL.SILVER));
 end
+
+
+
+
 
 
 rule "Client with annual income greater than 1M become GOLD"
     when
-        $client: Client($personId : person.id, level != Client.LEVEL.GOLD )
+        $client: Client($personId : personId, level != Client.LEVEL.GOLD )
         $person: Person(id == $personId , annualIncome > 1000000L)
     then
     	modify ( $client )  { setLevel( Client.LEVEL.GOLD ) }
 end
+
+
 

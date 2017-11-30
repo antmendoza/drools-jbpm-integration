@@ -7,19 +7,20 @@ public class Client {
 	}
 
 	private final String id;
-	private final Person person;
+	private final Integer personId;
 	private LEVEL level;
 
-	public Client(final Person person, final LEVEL level) {
-		this.person = person;
+	public Client(final Integer personId, final LEVEL level) {
+		this.personId = personId;
 		this.level = level;
-		this.id = "CID" + person.getId();
+		this.id = "CID" + personId;
 	}
 
-	public Person getPerson() {
-		return person;
-	}
 
+	public Integer getPersonId() {
+		return personId;
+	}
+	
 	public LEVEL getLevel() {
 		return level;
 	}
@@ -34,6 +35,6 @@ public class Client {
 
 	@Override
 	public String toString() {
-		return "Client { person=[" + person + "]; level=[" + level + "]; id=[" + id + "]}";
+		return "Client { personId=[" + personId + "]; level=[" + level + "]; id=[" + id + "]}";
 	}
 }

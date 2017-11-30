@@ -29,7 +29,7 @@ import com.odsc.antmendoza.model.Person;
 public class DetermineClientTypeTest {
 
 	private static final Logger logger = LoggerFactory.getLogger("");
-	
+
 	private KieContainer kContainer;
 
 	public DetermineClientTypeTest() {
@@ -59,7 +59,7 @@ public class DetermineClientTypeTest {
 		// Prepare test
 		final Person person = new Person("Person1", AGE._20.getValue(), ANNUAL_INCOME._38k.getValue());
 		kSession.insert(person);
-		
+
 		// Execute
 		kSession.fireAllRules(new PrintRuleExecution());
 
@@ -69,15 +69,12 @@ public class DetermineClientTypeTest {
 
 		// and the level is BRONZE
 		final Client client = clients.iterator().next();
-		assertThat(client.getPerson(), equalTo(person));
+		assertThat(client.getPersonId(), equalTo(person.getId()));
 		assertThat(client.getLevel(), equalTo(LEVEL.BRONZE));
 	}
 
-
-	
-	
 	@Test
-	public void testPersonWithAge35IsClientSILVER() {
+	public void testPersonWithAge25IsClientSILVER() {
 
 		final KieSession kSession = createKsession();
 		final Person person = new Person("Person1", AGE._25.getValue(), ANNUAL_INCOME._38k.getValue());
@@ -88,20 +85,16 @@ public class DetermineClientTypeTest {
 		assertThat(clients.size(), equalTo(1));
 
 		final Client client = clients.iterator().next();
-		assertThat(client.getPerson(), equalTo(person));
+		assertThat(client.getPersonId(), equalTo(person.getId()));
 		assertThat(client.getLevel(), equalTo(LEVEL.SILVER));
 	}
 
-	
-	
-	
-	
 	@Test
-	public void testPersonWithAnnulIncomeGreater100kIsClientGOLD() {
+	public void testPersonWithAnnulIncomeGreater1MIsClientGOLD() {
 
 		final KieSession kSession = createKsession();
-		final Person person = new Person("Person1", AGE._25.getValue(), ANNUAL_INCOME._2M.getValue());
-	
+		final Person person = new Person("Person GOLD", AGE._25.getValue(), ANNUAL_INCOME._2M.getValue());
+
 		kSession.insert(person);
 		kSession.fireAllRules(new PrintRuleExecution());
 
@@ -109,25 +102,19 @@ public class DetermineClientTypeTest {
 		assertThat(clients.size(), equalTo(1));
 
 		final Client client = clients.iterator().next();
-		assertThat(client.getPerson(), equalTo(person));
+		assertThat(client.getPersonId(), equalTo(person.getId()));
 		assertThat(client.getLevel(), equalTo(LEVEL.GOLD));
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
 	private static enum AGE {
 		_20(20), _25(25);
-		
+
 		private final int value;
+
 		private AGE(int value) {
 			this.value = value;
 		}
+
 		public int getValue() {
 			return value;
 		}
@@ -137,9 +124,11 @@ public class DetermineClientTypeTest {
 		_2M(2000000L), _38k(38000L);
 
 		private final long value;
+
 		private ANNUAL_INCOME(long value) {
 			this.value = value;
 		}
+
 		public long getValue() {
 			return value;
 		}
@@ -157,7 +146,6 @@ public class DetermineClientTypeTest {
 			return object instanceof Client;
 		}
 	}
-	
 
 	private KieSession createKsession() {
 		final KieSession kSession = kContainer.newKieSession();

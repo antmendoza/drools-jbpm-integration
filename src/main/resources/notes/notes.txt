@@ -1,9 +1,25 @@
-Drools. Business Rule Management System (BRMS)
 
+
+
+
+
+
+
+
+
+Drools --> (BRMS)
 
 +++ Business Rule Management System 
 
-Is a framework that allow us to implement, maintain and execute business rules.
+
+
+
+
+
+
+
+
+
 
 
 
@@ -20,7 +36,7 @@ Is a framework that allow us to implement, maintain and execute business rules.
 
 +++ Business Rule
 
-	when 
+	when
 		a condition is found to be true
 	then 
 		an action is executed
@@ -37,10 +53,22 @@ Is a framework that allow us to implement, maintain and execute business rules.
 
 
 
-Business rules:
+
+
+
+
++++ Example business rules:
 - A person between 18 and 25 is a client level BRONZE
 - A person between 25 and 45 is a client level SILVER
 - Any client is GOLD if their annual income is greater than £1M
+
+
+
+
+
+
+
+
 
 
 

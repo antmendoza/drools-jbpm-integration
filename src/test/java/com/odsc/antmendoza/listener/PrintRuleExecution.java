@@ -11,7 +11,7 @@ public class PrintRuleExecution implements AgendaFilter {
 
 	public boolean accept(Match match) {
 		logger.info("");
-		logger.info("Executing: " + match.getRule().getName());
+		logger.info("Executing rule: " + match.getRule().getName());
 		match.getObjects().forEach(object -> logger.info(object.toString()));
 		return true;
 	}
