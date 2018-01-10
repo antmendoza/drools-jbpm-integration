@@ -53,7 +53,6 @@ public class DetermineClientTypeTest {
 	@Test
 	public void testPersonBetween18And25IsClientBRONZE() {
 		// Entry point / session - to interact with the engine
-		// initialice the session to interact with the engine
 		final KieSession kSession = createKsession();
 
 		// Prepare test

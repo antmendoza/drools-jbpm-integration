@@ -40,6 +40,8 @@ Drools --> (BRMS)
 		a condition is found to be true
 	then 
 		an action is executed
+		
+		
 
 
 

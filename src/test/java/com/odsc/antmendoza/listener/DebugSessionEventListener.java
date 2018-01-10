@@ -18,7 +18,7 @@ public class DebugSessionEventListener implements RuleRuntimeEventListener{
 	@Override
 	public void objectUpdated(ObjectUpdatedEvent event) {
 		logger.info("Object Updated: ");
-		logger.info("	New value: " + event.getObject());
+		logger.info("	Object Updated: " + event.getObject());
 
 	}
 
